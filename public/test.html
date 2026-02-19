@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Page - Phase 1</title>
+</head>
+<body>
+    <h1>Phase 1 Test Page</h1>
+    <p>If you can see this, the Express server is serving static files correctly!</p>
+    <button onclick="testHealth()">Test Health Endpoint</button>
+    <button onclick="testAnalyze()">Test Analyze Endpoint</button>
+    <pre id="output"></pre>
+
+    <script>
+        async function testHealth() {
+            try {
+                const response = await fetch('/api/health');
+                const data = await response.json();
+                document.getElementById('output').textContent = 
+                    'Health Check:\n' + JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('output').textContent = 'Error: ' + error.message;
+            }
+        }
+
+        async function testAnalyze() {
+            try {
+                const response = await fetch('/api/analyze', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ logContent: 'test' })
+                });
+                const data = await response.json();
+                document.getElementById('output').textContent = 
+                    'Analyze Endpoint:\n' + JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('output').textContent = 'Error: ' + error.message;
+            }
+        }
+    </script>
+</body>
+</html>
