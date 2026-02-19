@@ -47,8 +47,10 @@ app.use((err, req, res, next) => {
 
 // Start server
 const PORT = constants.PORT;
-app.listen(PORT, () => {
-  console.log(`✓ Server running on http://localhost:${PORT}`);
+const HOST = process.env.HOST || '0.0.0.0';
+
+app.listen(PORT, HOST, () => {
+  console.log(`✓ Server running on http://${HOST}:${PORT}`);
   console.log(`✓ Environment: ${constants.NODE_ENV}`);
   console.log(`✓ API Key configured: ${constants.OPENAI_API_KEY ? 'Yes' : 'No'}`);
 });
